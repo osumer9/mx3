@@ -1,6 +1,8 @@
 {
   "app": "mx3-tools",
   "version": 1,
-  "checked": [],
-  "updatedAt": "2026-10-09T11:11:04.405Z"
+  "checked": [
+    "p1-ratchet38"
+  ],
+  "updatedAt": "2026-10-09T11:11:31.167Z"
 }
