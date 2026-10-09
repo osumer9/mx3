@@ -1,16 +1,34 @@
-# MX-3 Garaj Envanteri — GitHub senkronizasyonlu
+# MX-3 Garage 2.0 — GitHub Pages
 
-## Kurulum
-1. Bu klasördeki `index.html` ve `inventory.json` dosyalarını boş GitHub repository’nin **ana dizinine** yükle (Add file → Upload files → Commit changes).
-2. Settings → Pages → Build and deployment: `Deploy from a branch`, branch `main`, folder `/(root)` seç.
-3. Siteyi aç; kullanıcı adı/repo bilgileri GitHub Pages adresinden otomatik doldurulur.
-4. GitHub → Settings → Developer settings → Personal access tokens → **Fine-grained tokens** → Generate new token. Repository access olarak yalnızca kendi repository’ni seç. Repository permissions altında **Contents: Read and write** ver. Bir bitiş tarihi seç. Token’ı kopyala.
-5. Sitede token’ı gir ve `GitHub'a bağlan ve listeyi çek` de. İşaretlediğin her değişiklik `inventory.json` dosyasına GitHub commit'i olarak kaydedilir. Diğer cihazlarda da aynı hesabın token’ıyla bağlan.
+## Mevcut siteyi güvenli güncelleme
+1. GitHub repository'nde **inventory.json dosyasına dokunma**. Mevcut satın alma işaretlerin burada kalıyor.
+2. Eski `index.html` içindeki `GITHUB_TOKEN` değerini yalnızca kendi bilgisayarında not et. **Token'ı kimseyle paylaşma.**
+3. ZIP'ten `index.html`, `style.css`, `app.js`, `legacy-data.js`, `config.js` dosyalarını repo köküne yükle. Mevcut `index.html` değişecek.
+4. `config.js` içindeki `TOKEN_BURAYA` değerini **senin mevcut fine-grained GitHub token'ınla** değiştir. İstersen owner/repo bilgilerini açıkça ayarlayabilirsin. Token'ın yalnızca bu repoya `Contents: Read and write` izni olmalı.
+5. GitHub Pages güncellenmesini bekle; sonra Ctrl+Shift+R ile aç. `data/` dosyalarını **elle oluşturma zorunluluğu yok**: ilk yeni kayıtta GitHub API bunları oluşturur.
+6. Dashboard'dan güncel kilometreyi ilk kez gir; geçmiş kayıtları doğrulamadan doldurma.
 
-## Güvenlik ve sınırlamalar
-- Token **koda, inventory.json'a veya localStorage'a yazılmaz**; sayfanın JS belleğinde kalır. Yenilemede tekrar girmen gerekir.
-- Public GitHub Pages sitesi herkese açık olabilir; JSON da public repoda görülebilir. Bu listede özel bilgi tutma.
-- İnternet yokken veya token girmeden yapılan işaretlemeler yerel tarayıcıda saklanır. **Sonradan bağlanınca GitHub'daki liste esas alınır**; bağlantı öncesi yerel değişiklikler otomatik yüklenmez. Önceden yaptığın işaretleri korumak için önce yedek al.
-- Aynı anda iki cihazdan yapılan değişikliklerde API çakışması yeniden okunarak birleştirilmeye çalışılır; anlık iki yönlü canlı güncelleme yoktur, diğer cihaz `GitHub'dan yenile` yapmalı ya da sayfayı yeniden açıp bağlanmalıdır.
-- GitHub API'nin `main` branch üzerinde yazma izni olmalı. Korunan branch ya da farklı varsayılan branch kullanıyorsan `index.html` içindeki `branch:'main'` değerini değiştir.
-- Tarayıcıda çalışırken erişim token'ını asla URL'ye, GitHub commit'ine veya paylaşılan ekran görüntüsüne ekleme.
+## Veri koruma
+- `inventory.json` **aynı dosya ve aynı eski ID'lerle** okunur/yazılır. Eski listedeki 5 öncelik grubu ve Gunpla/Multimetre bilgileri aynen korundu.
+- `data/vehicle.json`, `maintenance.json`, `service-plans.json`, `issues.json`, `expenses.json`, `fuel.json`, `reminders.json` kullanıcı veri dosyalarıdır. İlk kez kaydederken oluşturulurlar, mevcutlarsa son sürümleri korunur.
+- Her kayıt kendi `id` değeriyle güncellenir. Aynı dosyada yarışan commit'ler için SHA çakışması algılanıp tekrar denenir. Aynı kaydın iki cihazda eş zamanlı düzenlenmesinde son kaydeden kazanır; Git geçmişinden eski veriye geri dönülebilir.
+- Takım envanterinde eski `inventory.json` içindeki bilinmeyen alanlar ve bilinmeyen ID'ler korunur.
+- `JSON yedek` veri JSON'larını dışarı çıkarır, **yüklenen fiziksel fotoğraf/PDF dosyalarını içermez**; onlar repodadır.
+- Public GitHub repository'sinde **token ve yüklenen belgeler herkese açıktır**. Belgelerdeki kişisel bilgileri temizle.
+
+## Kullanım
+- Dashboard: Kilometre, masraf özeti, yaklaşan bakım ve tarihler.
+- Bakımlar: Yapılmış bakım + ayrı periyodik bakım planı. Bakım aralıkları senin girdiğin değerlere göre değerlendirilir.
+- Arızalar: Durum, önem, belirtiler, teşhis notu, belge.
+- Takım Çantası: Var olan alışveriş işaretleri otomatik okunur/yazılır.
+- Masraflar: Ayrı harcamalar; bakım ve yakıt masrafları iki kez sayılmaz.
+- Yakıt: Tam depo esaslı yakıt tüketimi hesabı; aradaki kısmi dolumlar dahil.
+- Tarihler: Muayene/sigorta son günleri (sayfa içi hatırlatma).
+- Belgeler: Bakım/arıza/masraf/yakıt/tarih kayıtlarına fotoğraf/PDF eklenebilir; dosya başına 5 MB. Silinen kayıtların belgeleri otomatik silinmez.
+
+## Sınırlamalar
+- Anlık push bildirim / arka planda senkronizasyon yok; sayfayı açınca GitHub'dan veri okunur.
+- GitHub yazma işlemleri bağlantı gerektirir; çevrimdışı değişiklikler kayıt işlemine kabul edilmez.
+- Yeni kayıtların PDF ve görsel dosyaları tek tek GitHub'a commit edilir. Dosya yüklenip JSON kaydı başarısız olursa yetim dosya kalabilir.
+- GitHub API büyük kayıt ve istek limitlerine tabidir. Çok yüksek hacimlerde ayrı depolama gerekir.
+- Güncel km ilk kurulumda kullanıcı tarafından girilir. Tahmini değerler otomatik gerçek veri olarak kaydedilmez.
