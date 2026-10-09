@@ -4,7 +4,8 @@
   "checked": [
     "p1-deepsockets",
     "p1-ratchet38",
-    "p1-sockets38"
+    "p1-sockets38",
+    "p3-heatgun"
   ],
-  "updatedAt": "2026-10-09T11:12:53.568Z"
+  "updatedAt": "2026-10-09T11:13:10.504Z"
 }
