@@ -2,7 +2,9 @@
   "app": "mx3-tools",
   "version": 1,
   "checked": [
-    "p1-ratchet38"
+    "p1-deepsockets",
+    "p1-ratchet38",
+    "p1-sockets38"
   ],
-  "updatedAt": "2026-10-09T11:11:31.167Z"
+  "updatedAt": "2026-10-09T11:11:33.547Z"
 }
