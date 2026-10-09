@@ -1,23 +1,5 @@
 {
   "app": "mx3-tools",
   "version": 1,
-  "checked": [
-    "p1-deepsockets",
-    "p1-ratchet38",
-    "p1-sockets38",
-    "p1-trim",
-    "p2-adapters",
-    "p2-feeler",
-    "p2-sockets12",
-    "p2-sockets14",
-    "p3-alligator",
-    "p3-contact",
-    "p3-heatgun",
-    "p3-heatshrink",
-    "p4-funnel",
-    "p4-stands",
-    "p5-bearing",
-    "p5-puller"
-  ],
-  "updatedAt": "2026-10-09T11:13:54.619Z"
+  "checked": []
 }
